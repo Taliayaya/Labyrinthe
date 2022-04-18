@@ -31,6 +31,7 @@ class Graph:
         Postconditions:
             Aucune
         """
+        self.dico = dict()
 
     def __str__(self)->str:
         u"""
@@ -40,7 +41,7 @@ class Graph:
             Nom du graphe (self)
         
         Postconditions:
-            Contenu du gtraphe (self.graphe)
+            Contenu du graphe (self.graphe)
         """
         return str(self.dico)
 
@@ -70,10 +71,10 @@ class Graph:
                 L'un des deux noeuds de la liaison à effectuer
             
             nodeB : tuple[int, int]
-                L'un des deux noeuds de la laisons à effectuer 
+                L'un des deux noeuds de la liaisons à effectuer 
 
         Postcondition:
-            Ajoute la liaison au dictionaire des noeuds dans leur liste
+            Ajoute la liaison au dictionnaire des noeuds dans leur liste
             d'adjacences respectives
         """
         self.dico[nodeA].append(nodeB)
