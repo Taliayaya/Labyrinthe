@@ -29,7 +29,7 @@ class Graph:
             Nom du graphe (self)
         
         Postconditions:
-            Aucune
+            Crée le graphe sous forme d'un dictionnaire
         """
         self.dico = dict()
 
