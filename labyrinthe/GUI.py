@@ -31,6 +31,7 @@ class GUI:
         self.board = turtle.Turtle()
         turtle.screensize(canvwidth=WIDTH, canvheight=HEIGHT, bg=COLOR)
         turtle.up()
+        turtle.speed(0)
         # turtle.hideturtle()
 #        self.setOriginPosition()
 
