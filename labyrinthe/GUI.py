@@ -39,8 +39,19 @@ class GUI:
         Fonction permettant d'afficher le labyrinthe rentré en paramètre dans la fenêtre qui apparaît lors de l'appel de la classe
         Préconditions:
             labyrinthe : G
-                un objet de la classe graphe ayant des tuples en tant que sommets
-
+                Un objet de la classe graphe ayant des tuples en tant que sommets
+                C'est le labyrinthe affiché par la fonction.
+            nbLine : int
+                Le nombre de lignes de ce labyrinthe
+            nbColumn : int
+                Le nombre de colonnes de ce labyrinthe
+            dist : float
+                La largeur du côté des cases du labyrinthe
+        
+        Postconditions:
+            Affiche la bordure du labyrinthe
+            Affiche les murs horizontaux du labyrinthe
+            Affiche les murs verticaux du labyrinthe
         """
         self.__drawEdge(labyrinthe, nbLine, nbColumn, dist)
         self.__drawLine(labyrinthe, nbLine, nbColumn, dist)
