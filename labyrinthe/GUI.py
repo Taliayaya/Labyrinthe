@@ -10,7 +10,6 @@ COLOR = 'white'
 
 class GUI:
     def __init__(self) -> None:
-        turtle.speed(1)
         self.board = turtle.Turtle()
         turtle.screensize(canvwidth=WIDTH, canvheight=HEIGHT, bg=COLOR)
         turtle.up()
