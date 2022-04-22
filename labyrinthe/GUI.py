@@ -1,6 +1,6 @@
 import turtle
-import Graph as G
-import Labyrinthe
+import labyrinthe.Graph as G
+import labyrinthe.Labyrinthe as L
 
 WIDTH = 800
 HEIGHT = 800
@@ -35,11 +35,11 @@ class GUI:
         # turtle.hideturtle()
 #        self.setOriginPosition()
 
-    def showLabyrinthe(self, labyrinthe: G, nbLine: int, nbColumn: int, dist: float = 45):
+    def showLabyrinthe(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float = 45):
         u"""
         Fonction permettant d'afficher le labyrinthe rentré en paramètre dans la fenêtre qui apparaît lors de l'appel de la classe
         Préconditions:
-            labyrinthe : G
+            labyrinthe : G.Graph
                 Un objet de la classe graphe ayant des tuples en tant que sommets.
                 C'est le labyrinthe affiché par la fonction.
             nbLine : int
@@ -59,12 +59,12 @@ class GUI:
         self.__drawColumn(labyrinthe, nbLine, nbColumn, dist)
         turtle.done()
 
-    def __drawLine(self, labyrinthe: G, nbLine: int, nbColumn: int, dist: float):
+    def __drawLine(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
         Permet de dessiner les murs entre chaque ligne du labyrinthe
 
         Préconditions:
-            labyrinthe : G
+            labyrinthe : G.Graph
                 Un objet de la classe graphe ayant des tuples en tant que sommets.
                 C'est le labyrinthe affiché par la fonction.
             nbLine : int
@@ -87,12 +87,12 @@ class GUI:
                 turtle.forward(dist)
         turtle.up()
 
-    def __drawColumn(self, labyrinthe: G, nbLine: int, nbColumn: int, dist: float):
+    def __drawColumn(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
         Permet de dessiner les murs entre chaque colonne du labyrinthe
 
         Préconditions:
-            labyrinthe : G
+            labyrinthe : G.Graph
                 Un objet de la classe graphe ayant des tuples en tant que sommets.
                 C'est le labyrinthe affiché par la fonction.
             nbLine : int
@@ -116,12 +116,12 @@ class GUI:
                 turtle.forward(dist)
         turtle.up()
 
-    def __drawEdge(self, labyrinthe: G, nbLine: int, nbColumn: int, dist: float):
+    def __drawFrame(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
         Permet de dessiner la bordure du labyrinthe
 
         Préconditions:
-            labyrinthe : G
+            labyrinthe : G.Graph
                 Un objet de la classe graphe ayant des tuples en tant que sommets.
                 C'est le labyrinthe affiché par la fonction.
             nbLine : int
@@ -142,12 +142,8 @@ class GUI:
         turtle.setposition(-nbColumn*dist/2, -nbLine*dist/2)
         turtle.up()
 
-
-    def setOriginPosition(self):
-        u"""
-        Remet la tortue/stylo au centre de l'écran
-        """
-        turtle.home()
+    def showGraph(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
+        pass
 
 
 
