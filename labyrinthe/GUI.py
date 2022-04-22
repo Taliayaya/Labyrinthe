@@ -54,7 +54,7 @@ class GUI:
             Affiche les murs horizontaux du labyrinthe
             Affiche les murs verticaux du labyrinthe
         """
-        self.__drawEdge(labyrinthe, nbLine, nbColumn, dist)
+        self.__drawFrame(labyrinthe, nbLine, nbColumn, dist)
         self.__drawLine(labyrinthe, nbLine, nbColumn, dist)
         self.__drawColumn(labyrinthe, nbLine, nbColumn, dist)
         turtle.done()
@@ -148,4 +148,4 @@ class GUI:
 
 
 if __name__ == "__main__":
-    GUI().showLabyrinthe(Labyrinthe.Labyrinthe, 4, 8)
+    GUI().showLabyrinthe(L.Labyrinthe, 4, 8)
