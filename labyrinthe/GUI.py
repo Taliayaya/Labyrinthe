@@ -57,7 +57,6 @@ class GUI:
         self.__drawFrame(labyrinthe, nbLine, nbColumn, dist)
         self.__drawLine(labyrinthe, nbLine, nbColumn, dist)
         self.__drawColumn(labyrinthe, nbLine, nbColumn, dist)
-        turtle.done()
 
     def __drawLine(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
@@ -115,6 +114,7 @@ class GUI:
                     turtle.down()
                 turtle.forward(dist)
         turtle.up()
+        turtle.home()
 
     def __drawFrame(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
@@ -142,10 +142,48 @@ class GUI:
         turtle.setposition(-nbColumn*dist/2, -nbLine*dist/2)
         turtle.up()
 
-    def showGraph(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
-        pass
+    def showGraph(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float = 45):
+        self.__drawHorizontalEdge(labyrinthe, nbLine, nbColumn, dist)
+        self.__drawVerticalEdge(labyrinthe, nbLine, nbColumn, dist)
+#        self.__drawNode(labyrinthe, nbLine, nbColumn, dist)
 
+    def __drawHorizontalEdge(self, labyrinthe, nbLine, nbColumn, dist):
+        for l in range(1, nbLine+1):
+            turtle.up()
+            turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.5*dist)
+            for c in range(1, nbColumn):
+                turtle.up()
+                if (l, c+1) in labyrinthe.dico[(l, c)]:
+                    turtle.down()
+                turtle.forward(dist)
+        turtle.up()
+
+    def __drawVerticalEdge(self, labyrinthe, nbLine, nbColumn, dist):
+        turtle.right(90)
+        for c in range(1, nbColumn+1):
+            turtle.up()
+            turtle.setposition(-nbColumn*dist/2 + c*dist - 0.5*dist, (nbLine*dist/2) - 0.5*dist)
+            for l in range(1, nbLine):
+                turtle.up()
+                if (l+1, c) in labyrinthe.dico[(l, c)]:
+                    turtle.down()
+                turtle.forward(dist)
+        turtle.up()
+
+    def __drawNode(self, labyrinthe, nbLine, nbColumn, dist):
+        for l in range(1, nbLine):
+            turtle.up()
+            turtle.setposition((-nbColumn*dist/2)-dist/4, (nbLine*dist/2) - (l-0.5)*dist)
+            for c in range(1, nbColumn):
+                turtle.up()
+                if (l, c+1) in labyrinthe.dico[(l, c)]:
+                    turtle.down()
+                turtle.forward(dist)
+        turtle.up()
 
 
 if __name__ == "__main__":
-    GUI().showLabyrinthe(L.Labyrinthe, 4, 8)
+    test = GUI()
+    test.showLabyrinthe(L.Labyrinthe, 4, 8)
+    test.showGraph(L.Labyrinthe, 4, 8)
+    turtle.done()
