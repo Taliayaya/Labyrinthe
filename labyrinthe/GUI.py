@@ -24,8 +24,8 @@ class GUI:
             Attention, le nombre de lignes et de colonnes de ce labyrinthe doit également être précisé en paramètre.
             La largeur par défaut des cases est de 45 pixels
 
-        drawGraph()
-            méthode à implémenter
+        drawGraph(self, labyrinthe: G, nbLine: int, nbColumn: int, dist: float = 45)
+            Affiche le graphe utilisé pour décrire le labyrinthe de showLabyrinthe
     """
     def __init__(self) -> None:
         self.board = turtle.Turtle()
@@ -143,6 +143,24 @@ class GUI:
         turtle.up()
 
     def showGraph(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float = 45):
+        u"""
+        Fonction permettant d'afficher le graphe rentré en paramètre dans la fenêtre qui apparaît lors de l'appel de la classe
+        Préconditions:
+            labyrinthe : G.Graph
+                Un objet de la classe graphe ayant des tuples en tant que sommets.
+                C'est le graphe affiché par la fonction.
+            nbLine : int
+                Le nombre de lignes de ce graphe
+            nbColumn : int
+                Le nombre de colonnes de ce graphe
+            dist : float
+                La largeur du côté des cases du graphe
+        
+        Postconditions:
+            Affiche les noeuds du graphe
+            Affiche les arêtes horizontales du graphe
+            Affiche les arêtes verticales du graphe
+        """
         turtle.pencolor('blue')
         self.__drawHorizontalEdge(labyrinthe, nbLine, nbColumn, dist)
         self.__drawVerticalEdge(labyrinthe, nbLine, nbColumn, dist)
@@ -150,6 +168,23 @@ class GUI:
         turtle.pencolor('black')
 
     def __drawHorizontalEdge(self, labyrinthe, nbLine, nbColumn, dist):
+        u"""
+        Permet de dessiner les arêtes horizontales du graphe
+
+        Préconditions:
+            labyrinthe : G.Graph
+                Un objet de la classe graphe ayant des tuples en tant que sommets.
+                C'est le graphe affiché par la fonction.
+            nbLine : int
+                Le nombre de lignes de ce graphe
+            nbColumn : int
+                Le nombre de colonnes de ce graphe
+            dist : float
+                La largeur du côté des cases du graphe
+        
+        Postconditions:
+            Affiche les arêtes horizontales du graphe
+        """
         for l in range(1, nbLine+1):
             turtle.up()
             turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.5*dist)
@@ -161,6 +196,23 @@ class GUI:
         turtle.up()
 
     def __drawVerticalEdge(self, labyrinthe, nbLine, nbColumn, dist):
+        u"""
+        Permet de dessiner les arêtes verticales du graphe
+
+        Préconditions:
+            labyrinthe : G.Graph
+                Un objet de la classe graphe ayant des tuples en tant que sommets.
+                C'est le graphe affiché par la fonction.
+            nbLine : int
+                Le nombre de lignes de ce graphe
+            nbColumn : int
+                Le nombre de colonnes de ce graphe
+            dist : float
+                La largeur du côté des cases du graphe
+        
+        Postconditions:
+            Affiche les arêtes verticales du graphe
+        """
         turtle.right(90)
         for c in range(1, nbColumn+1):
             turtle.up()
@@ -174,6 +226,23 @@ class GUI:
         turtle.home()
 
     def __drawNode(self, labyrinthe, nbLine, nbColumn, dist):
+        u"""
+        Permet de dessiner les noeuds du graphe
+
+        Préconditions:
+            labyrinthe : G.Graph
+                Un objet de la classe graphe ayant des tuples en tant que sommets.
+                C'est le graphe affiché par la fonction.
+            nbLine : int
+                Le nombre de lignes de ce graphe
+            nbColumn : int
+                Le nombre de colonnes de ce graphe
+            dist : float
+                La largeur du côté des cases du graphe
+        
+        Postconditions:
+            Affiche les noeuds du graphe
+        """
         for l in range(1, nbLine+1):
             turtle.up()
             turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.25*dist)
