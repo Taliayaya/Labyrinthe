@@ -143,9 +143,11 @@ class GUI:
         turtle.up()
 
     def showGraph(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float = 45):
+        turtle.pencolor('blue')
         self.__drawHorizontalEdge(labyrinthe, nbLine, nbColumn, dist)
         self.__drawVerticalEdge(labyrinthe, nbLine, nbColumn, dist)
-#        self.__drawNode(labyrinthe, nbLine, nbColumn, dist)
+        self.__drawNode(labyrinthe, nbLine, nbColumn, dist)
+        turtle.pencolor('black')
 
     def __drawHorizontalEdge(self, labyrinthe, nbLine, nbColumn, dist):
         for l in range(1, nbLine+1):
@@ -169,15 +171,16 @@ class GUI:
                     turtle.down()
                 turtle.forward(dist)
         turtle.up()
+        turtle.home()
 
     def __drawNode(self, labyrinthe, nbLine, nbColumn, dist):
-        for l in range(1, nbLine):
+        for l in range(1, nbLine+1):
             turtle.up()
-            turtle.setposition((-nbColumn*dist/2)-dist/4, (nbLine*dist/2) - (l-0.5)*dist)
-            for c in range(1, nbColumn):
+            turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.25*dist)
+            for c in range(1, nbColumn+1):
+                turtle.down()
+                turtle.circle(dist/4)
                 turtle.up()
-                if (l, c+1) in labyrinthe.dico[(l, c)]:
-                    turtle.down()
                 turtle.forward(dist)
         turtle.up()
 
