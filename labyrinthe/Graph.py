@@ -34,6 +34,7 @@ class Graph:
         """
         self.dico = dict()
         self.parent = dict()
+        self.parent[(1, 1)] = None
 
     def __str__(self) -> str:
         u"""
@@ -81,13 +82,20 @@ class Graph:
         self.dico[nodeB].append(nodeA)
 
     def dfs_recursif(self, node: 'tuple[int, int]', reset=True) -> list:
-        u"""
-        Ma fonction est dégueulasse et fonctionne à l'arrache, faut la changer
-        Mais elle était pratique pour les tests
+        u"""Parcours un graphe de façon récursive en profondeur
+
+        Précondition:
+            node :  tuple[int, int] 
+                est le nom de sommet de départ
+            reset : (bool) 
+                permet de réinitialiser la liste des sommets parcourus
+
+        Postcondition:
+            Remplie un dictionnaire des parents et une liste des noeuds visités
         """
         if reset:
             self.vus = []
-        print(node)
+        # print(node)
         self.vus.append(node)
         nextNodes = self.dico[node]
         for nNode in nextNodes:
