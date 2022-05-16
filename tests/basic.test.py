@@ -82,5 +82,4 @@ class BasicTests(unittest.TestCase):
         self.assertListEqual(test_result_2, expected_result_2)
 
 
-if __name__ == "__main__":
-    unittest.main(verbosity=2)
+unittest.main(verbosity=2)
