@@ -93,3 +93,18 @@ class Graph:
                 self.l.append(self.dfs_recursif(elmt, False))
         self.l = [i for i in self.l if i != [...]]
         return self.l
+    
+    def passage(self, nodeA : 'tuple[int, int]', nodeB : 'tuple[int, int]'):
+        u"""
+        Teste s'il existe un passage entre deux noeuds du graphe
+
+        Précondition:
+            nodeA : tuple[int, int]
+                Un des deux noeuds
+            nodeB : tuple[int, int]
+                L'autre noeud
+
+        Postcondition:
+            Renvoie s'il existe bel et bien un passage entre nodeA et nodeB
+        """
+        return nodeB in self.dico[nodeA]
