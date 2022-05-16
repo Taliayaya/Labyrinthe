@@ -31,11 +31,13 @@ class GUI:
         drawGraph(self, labyrinthe: G, nbLine: int, nbColumn: int, dist: float = 45)
             Affiche le graphe utilisé pour décrire le labyrinthe de showLabyrinthe
     """
+
     def __init__(self) -> None:
         self.board = turtle.Turtle()
         turtle.screensize(canvwidth=WIDTH, canvheight=HEIGHT, bg=BGCOLOR)
         turtle.up()
         turtle.speed(0)
+        self.coord = dict()
         # turtle.hideturtle()
 #        self.setOriginPosition()
 
@@ -52,7 +54,7 @@ class GUI:
                 Le nombre de colonnes de ce labyrinthe
             dist : float
                 La largeur du côté des cases du labyrinthe
-        
+
         Postconditions:
             Affiche la bordure du labyrinthe
             Affiche les murs horizontaux du labyrinthe
@@ -77,7 +79,7 @@ class GUI:
                 Le nombre de colonnes de ce labyrinthe
             dist : float
                 La largeur du côté des cases du labyrinthe
-        
+
         Postconditions:
             Affiche les murs horizontaux du labyrinthe
         """
@@ -105,7 +107,7 @@ class GUI:
                 Le nombre de colonnes de ce labyrinthe
             dist : float
                 La largeur du côté des cases du labyrinthe
-        
+
         Postconditions:
             Affiche les murs verticaux du labyrinthe
         """
@@ -135,7 +137,7 @@ class GUI:
                 Le nombre de colonnes de ce labyrinthe
             dist : float
                 La largeur du côté des cases du labyrinthe
-        
+
         Postconditions:
             Affiche la bordure du labyrinthe
         """
@@ -160,7 +162,7 @@ class GUI:
                 Le nombre de colonnes de ce graphe
             dist : float
                 La largeur du côté des cases du graphe
-        
+
         Postconditions:
             Affiche les noeuds du graphe
             Affiche les arêtes horizontales du graphe
@@ -185,13 +187,14 @@ class GUI:
                 Le nombre de colonnes de ce graphe
             dist : float
                 La largeur du côté des cases du graphe
-        
+
         Postconditions:
             Affiche les arêtes horizontales du graphe
         """
         for l in range(1, nbLine+1):
             turtle.up()
-            turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.5*dist)
+            turtle.setposition(-nbColumn*dist/2 + 0.5*dist,
+                               (nbLine*dist/2) - l*dist + 0.5*dist)
             for c in range(1, nbColumn):
                 turtle.up()
                 if (l, c+1) in labyrinthe.dico[(l, c)]:
@@ -213,14 +216,15 @@ class GUI:
                 Le nombre de colonnes de ce graphe
             dist : float
                 La largeur du côté des cases du graphe
-        
+
         Postconditions:
             Affiche les arêtes verticales du graphe
         """
         turtle.right(90)
         for c in range(1, nbColumn+1):
             turtle.up()
-            turtle.setposition(-nbColumn*dist/2 + c*dist - 0.5*dist, (nbLine*dist/2) - 0.5*dist)
+            turtle.setposition(-nbColumn*dist/2 + c*dist -
+                               0.5*dist, (nbLine*dist/2) - 0.5*dist)
             for l in range(1, nbLine):
                 turtle.up()
                 if (l+1, c) in labyrinthe.dico[(l, c)]:
@@ -243,15 +247,18 @@ class GUI:
                 Le nombre de colonnes de ce graphe
             dist : float
                 La largeur du côté des cases du graphe
-        
+
         Postconditions:
             Affiche les noeuds du graphe
         """
         turtle.fillcolor(FILLCOLOR)
         for l in range(1, nbLine+1):
             turtle.up()
-            turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.25*dist)
+            x = -nbColumn*dist/2 + 0.5*dist
+            y = (nbLine*dist/2) - l*dist + 0.25*dist
+            turtle.setposition(x, y)
             for c in range(1, nbColumn+1):
+                self.coord[(l, c)] = x, y + dist * (c-1)
                 turtle.down()
                 turtle.begin_fill()
                 turtle.circle(dist/4)
@@ -259,8 +266,9 @@ class GUI:
                 turtle.up()
                 turtle.forward(dist)
         turtle.up()
+        print(self.coord)
 
-    def drawParcours(self, labyrinthe: 'G.Graph', nbLine, nbColumn, dist = 45):
+    def drawParcours(self, labyrinthe: 'G.Graph', nbLine, nbColumn, dist=45):
         u"""
         Permet de dessiner les noeuds du graphe parcourus lors d'un parcours en profondeur du graphe en partant du noeud (1, 1)
 
@@ -274,25 +282,21 @@ class GUI:
                 Le nombre de colonnes de ce graphe
             dist : float
                 La largeur du côté des cases du graphe
-        
+
         Postconditions:
             Affiche les noeuds du graphe parcourus lors d'un parcours en profondeur du graphe en partant du noeud (1, 1)
         """
-        for l in range(1, nbLine+1):
+        labyrinthe.dfs_recursif((1, 1))
+        for l, c in labyrinthe.l:
+            y, x = self.coord[(l, c)]
+            turtle.setposition(x, y)
+            turtle.fillcolor(VISITEDCOLOR)
+            turtle.begin_fill()
+            turtle.circle(dist/4)
+            turtle.end_fill()
             turtle.up()
-            turtle.setposition(-nbColumn*dist/2 + 0.5*dist, (nbLine*dist/2) - l*dist + 0.25*dist)
-            for c in range(1, nbColumn+1):
-                turtle.down()
-                if (l, c) in labyrinthe.dfs_recursif((1, 1)):
-                    turtle.fillcolor(VISITEDCOLOR)
-                else:
-                    turtle.fillcolor(FILLCOLOR)
-                turtle.begin_fill()
-                turtle.circle(dist/4)
-                turtle.end_fill()
-                turtle.up()
-                turtle.forward(dist)
         turtle.up()
+
 
 if __name__ == "__main__":
     test = GUI()
