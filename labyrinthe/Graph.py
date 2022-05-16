@@ -79,3 +79,17 @@ class Graph:
         """
         self.dico[nodeA].append(nodeB)
         self.dico[nodeB].append(nodeA)
+    
+    def dfs_recursif(self, node: 'tuple[int, int]', reset = True)->list:
+        u"""
+        Ma fonction est dégueulasse et fonctionne à l'arrache, faut la changer
+        Mais elle était pratique pour les tests
+        """
+        if reset:
+            self.l = []
+        self.l.append(node)
+        for elmt in self.dico[node]:
+            if elmt not in self.l:
+                self.l.append(self.dfs_recursif(elmt, False))
+        self.l = [i for i in self.l if i != [...]]
+        return self.l

@@ -40,3 +40,4 @@ Labyrinthe.addEdge((3,7),(4,7))
 Labyrinthe.addEdge((4,7),(4,8))
 
 print(Labyrinthe)
+print(Labyrinthe.dfs_recursif((1,1)))
