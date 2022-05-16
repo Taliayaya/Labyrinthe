@@ -41,7 +41,7 @@ class GUI:
         turtle.up()
         turtle.speed(0)
         self.coord = dict()
-        # turtle.hideturtle()
+        turtle.hideturtle()
 #        self.setOriginPosition()
 
     def showLabyrinthe(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float = 45):
