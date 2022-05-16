@@ -256,19 +256,20 @@ class GUI:
             turtle.up()
             x = -nbColumn*dist/2 + 0.5*dist
             y = (nbLine*dist/2) - l*dist + 0.25*dist
-            turtle.setposition(x, y)
+            turtle.goto(x, y)
             for c in range(1, nbColumn+1):
-                self.coord[(l, c)] = x, y + dist * (c-1)
+                # print(x, y)
                 turtle.down()
                 turtle.begin_fill()
+                self.coord[(l, c)] = turtle.pos()
                 turtle.circle(dist/4)
                 turtle.end_fill()
                 turtle.up()
                 turtle.forward(dist)
         turtle.up()
-        print(self.coord)
+        # print(self.coord)
 
-    def drawParcours(self, labyrinthe: 'G.Graph', nbLine, nbColumn, dist=45):
+    def drawParcours(self, labyrinthe: 'G.Graph', dist=45):
         u"""
         Permet de dessiner les noeuds du graphe parcourus lors d'un parcours en profondeur du graphe en partant du noeud (1, 1)
 
@@ -287,9 +288,10 @@ class GUI:
             Affiche les noeuds du graphe parcourus lors d'un parcours en profondeur du graphe en partant du noeud (1, 1)
         """
         labyrinthe.dfs_recursif((1, 1))
+        turtle.speed(1.2)
         for l, c in labyrinthe.l:
-            y, x = self.coord[(l, c)]
-            turtle.setposition(x, y)
+            x, y = self.coord[(l, c)]
+            turtle.goto(x, y)
             turtle.fillcolor(VISITEDCOLOR)
             turtle.begin_fill()
             turtle.circle(dist/4)
