@@ -289,7 +289,7 @@ class GUI:
         """
         labyrinthe.dfs_recursif((1, 1))
         turtle.speed(1.2)
-        for l, c in labyrinthe.l:
+        for l, c in labyrinthe.vus:
             x, y = self.coord[(l, c)]
             turtle.goto(x, y)
             turtle.fillcolor(VISITEDCOLOR)

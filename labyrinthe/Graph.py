@@ -86,11 +86,11 @@ class Graph:
         Mais elle était pratique pour les tests
         """
         if reset:
-            self.l = []
+            self.vus = []
         print(node)
-        self.l.append(node)
+        self.vus.append(node)
         nextNodes = self.dico[node]
         for nNode in nextNodes:
-            if nNode not in self.l:
+            if nNode not in self.vus:
                 self.parent[nNode] = node
                 self.dfs_recursif(nNode, False)
