@@ -21,32 +21,33 @@ class Graph:
             en ajoutant dans la liste à clé A et B la valeur
             B et A.
     """
-    def __init__(self)->None:
+
+    def __init__(self) -> None:
         u"""
         Fonction permettant de créer un graphe
 
         Préconditions:
             Nom du graphe (self)
-        
+
         Postconditions:
             Crée le graphe sous forme d'un dictionnaire
         """
         self.dico = dict()
+        self.parent = dict()
 
-    def __str__(self)->str:
+    def __str__(self) -> str:
         u"""
         Fonction permettant l'affichage sous forme de dictionnaire du graphe
 
         Préconditions:
             Nom du graphe (self)
-        
+
         Postconditions:
             Contenu du graphe (self.graphe)
         """
         return str(self.dico)
 
-
-    def addNode(self, node: 'tuple[int]')->None:
+    def addNode(self, node: 'tuple[int]') -> None:
         u"""
         Permet d'ajouter un noeud dans le graphe
 
@@ -61,15 +62,14 @@ class Graph:
         if node not in self.dico:
             self.dico[node] = []
 
-
-    def addEdge(self, nodeA: 'tuple[int, int]', nodeB: 'tuple[int, int]')->None:
+    def addEdge(self, nodeA: 'tuple[int, int]', nodeB: 'tuple[int, int]') -> None:
         u"""
         Permet d'ajouter une liaison entre le noeud A et le noeud B
 
         Préconditions:
             nodeA : tuple[int, int]
                 L'un des deux noeuds de la liaison à effectuer
-            
+
             nodeB : tuple[int, int]
                 L'un des deux noeuds de la liaisons à effectuer 
 
@@ -79,17 +79,18 @@ class Graph:
         """
         self.dico[nodeA].append(nodeB)
         self.dico[nodeB].append(nodeA)
-    
-    def dfs_recursif(self, node: 'tuple[int, int]', reset = True)->list:
+
+    def dfs_recursif(self, node: 'tuple[int, int]', reset=True) -> list:
         u"""
         Ma fonction est dégueulasse et fonctionne à l'arrache, faut la changer
         Mais elle était pratique pour les tests
         """
         if reset:
             self.l = []
+        print(node)
         self.l.append(node)
-        for elmt in self.dico[node]:
-            if elmt not in self.l:
-                self.l.append(self.dfs_recursif(elmt, False))
-        self.l = [i for i in self.l if i != [...]]
-        return self.l
+        nextNodes = self.dico[node]
+        for nNode in nextNodes:
+            if nNode not in self.l:
+                self.parent[nNode] = node
+                self.dfs_recursif(nNode, False)
