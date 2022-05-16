@@ -102,3 +102,20 @@ class Graph:
             if nNode not in self.vus:
                 self.parent[nNode] = node
                 self.dfs_recursif(nNode, False)
+
+    def passage(self, nodeA: 'tuple[int, int]', nodeB: 'tuple[int, int]') -> bool:
+        u"""
+        Vérifie si les noeuds A et B sont conjoints
+        et qu'une liaison existe entre les deux.
+
+        Préconditions:
+            nodeA : tuple[int, int]
+                Le premier noeud à vérifier
+            nodeA : tuple[int, int]
+                Le premier noeud à vérifier
+
+        Postcondition:
+            Renvoie un booléen signifiant si les noeuds sont liés ou non
+        """
+        return (nodeA in self.dico[nodeB]
+                and nodeB in self.dico[nodeA])
