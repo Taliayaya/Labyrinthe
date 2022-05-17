@@ -34,6 +34,7 @@ class Graph:
         """
         self.dico = dict()
         self.parent = dict()
+        self.parent[(1, 1)] = None
 
     def __str__(self) -> str:
         u"""
@@ -81,31 +82,40 @@ class Graph:
         self.dico[nodeB].append(nodeA)
 
     def dfs_recursif(self, node: 'tuple[int, int]', reset=True) -> list:
-        u"""
-        Ma fonction est dégueulasse et fonctionne à l'arrache, faut la changer
-        Mais elle était pratique pour les tests
-        """
-        if reset:
-            self.l = []
-        print(node)
-        self.l.append(node)
-        nextNodes = self.dico[node]
-        for nNode in nextNodes:
-            if nNode not in self.l:
-                self.parent[nNode] = node
-                self.dfs_recursif(nNode, False)
-                
-    def passage(self, nodeA : 'tuple[int, int]', nodeB : 'tuple[int, int]'):
-        u"""
-        Teste s'il existe un passage entre deux noeuds du graphe
+        u"""Parcours un graphe de façon récursive en profondeur
 
         Précondition:
-            nodeA : tuple[int, int]
-                Un des deux noeuds
-            nodeB : tuple[int, int]
-                L'autre noeud
+            node :  tuple[int, int] 
+                est le nom de sommet de départ
+            reset : (bool) 
+                permet de réinitialiser la liste des sommets parcourus
 
         Postcondition:
-            Renvoie s'il existe bel et bien un passage entre nodeA et nodeB
+            Remplie un dictionnaire des parents et une liste des noeuds visités
         """
-        return nodeB in self.dico[nodeA]
+        if reset:
+            self.vus = []
+        # print(node)
+        self.vus.append(node)
+        nextNodes = self.dico[node]
+        for nNode in nextNodes:
+            if nNode not in self.vus:
+                self.parent[nNode] = node
+                self.dfs_recursif(nNode, False)
+
+    def passage(self, nodeA: 'tuple[int, int]', nodeB: 'tuple[int, int]') -> bool:
+        u"""
+        Vérifie si les noeuds A et B sont conjoints
+        et qu'une liaison existe entre les deux.
+
+        Préconditions:
+            nodeA : tuple[int, int]
+                Le premier noeud à vérifier
+            nodeA : tuple[int, int]
+                Le second noeud à vérifier
+
+        Postcondition:
+            Renvoie un booléen signifiant si les noeuds sont liés ou non
+        """
+        return (nodeA in self.dico[nodeB]
+                and nodeB in self.dico[nodeA])

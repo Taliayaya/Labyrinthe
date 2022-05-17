@@ -1,6 +1,8 @@
+from time import sleep
 import turtle
 import labyrinthe.Graph as G
 import labyrinthe.Labyrinthe as L
+import queue
 
 WIDTH = 800
 HEIGHT = 800
@@ -10,6 +12,7 @@ LLINECOLOR = 'black'
 GLINECOLOR = 'blue'
 FILLCOLOR = 'white'
 VISITEDCOLOR = 'blue'
+PATHCOLOR = 'green'
 
 
 class GUI:
@@ -38,7 +41,7 @@ class GUI:
         turtle.up()
         turtle.speed(0)
         self.coord = dict()
-        # turtle.hideturtle()
+        turtle.hideturtle()
 #        self.setOriginPosition()
 
     def showLabyrinthe(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float = 45):
@@ -61,7 +64,7 @@ class GUI:
             Affiche les murs verticaux du labyrinthe
         """
         turtle.pencolor(LLINECOLOR)
-        self.__drawFrame(labyrinthe, nbLine, nbColumn, dist)
+        self.__drawFrame(nbLine, nbColumn, dist)
         self.__drawLine(labyrinthe, nbLine, nbColumn, dist)
         self.__drawColumn(labyrinthe, nbLine, nbColumn, dist)
 
@@ -123,7 +126,7 @@ class GUI:
         turtle.up()
         turtle.home()
 
-    def __drawFrame(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
+    def __drawFrame(self, nbLine: int, nbColumn: int, dist: float):
         u"""
         Permet de dessiner la bordure du labyrinthe
 
@@ -171,9 +174,9 @@ class GUI:
         turtle.pencolor(GLINECOLOR)
         self.__drawHorizontalEdge(labyrinthe, nbLine, nbColumn, dist)
         self.__drawVerticalEdge(labyrinthe, nbLine, nbColumn, dist)
-        self.__drawNode(labyrinthe, nbLine, nbColumn, dist)
+        self.__drawNode(nbLine, nbColumn, dist)
 
-    def __drawHorizontalEdge(self, labyrinthe, nbLine, nbColumn, dist):
+    def __drawHorizontalEdge(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
         Permet de dessiner les arêtes horizontales du graphe
 
@@ -202,7 +205,7 @@ class GUI:
                 turtle.forward(dist)
         turtle.up()
 
-    def __drawVerticalEdge(self, labyrinthe, nbLine, nbColumn, dist):
+    def __drawVerticalEdge(self, labyrinthe: 'G.Graph', nbLine: int, nbColumn: int, dist: float):
         u"""
         Permet de dessiner les arêtes verticales du graphe
 
@@ -233,7 +236,7 @@ class GUI:
         turtle.up()
         turtle.home()
 
-    def __drawNode(self, labyrinthe, nbLine, nbColumn, dist):
+    def __drawNode(self, nbLine: int, nbColumn: int, dist: int):
         u"""
         Permet de dessiner les noeuds du graphe
 
@@ -251,24 +254,26 @@ class GUI:
         Postconditions:
             Affiche les noeuds du graphe
         """
+        self.coord["dist"] = dist
         turtle.fillcolor(FILLCOLOR)
         for l in range(1, nbLine+1):
             turtle.up()
             x = -nbColumn*dist/2 + 0.5*dist
             y = (nbLine*dist/2) - l*dist + 0.25*dist
-            turtle.setposition(x, y)
+            turtle.goto(x, y)
             for c in range(1, nbColumn+1):
-                self.coord[(l, c)] = x, y + dist * (c-1)
+                # print(x, y)
                 turtle.down()
                 turtle.begin_fill()
+                self.coord[(l, c)] = turtle.pos()
                 turtle.circle(dist/4)
                 turtle.end_fill()
                 turtle.up()
                 turtle.forward(dist)
         turtle.up()
-        print(self.coord)
+        # print(self.coord)
 
-    def drawParcours(self, labyrinthe: 'G.Graph', nbLine, nbColumn, dist=45):
+    def drawParcours(self, labyrinthe: 'G.Graph', dist: float = 45):
         u"""
         Permet de dessiner les noeuds du graphe parcourus lors d'un parcours en profondeur du graphe en partant du noeud (1, 1)
 
@@ -287,20 +292,61 @@ class GUI:
             Affiche les noeuds du graphe parcourus lors d'un parcours en profondeur du graphe en partant du noeud (1, 1)
         """
         labyrinthe.dfs_recursif((1, 1))
-        for l, c in labyrinthe.l:
-            y, x = self.coord[(l, c)]
-            turtle.setposition(x, y)
+        for l, c in labyrinthe.vus:
+            x, y = self.coord[(l, c)]
+            turtle.goto(x, y)
             turtle.fillcolor(VISITEDCOLOR)
             turtle.begin_fill()
             turtle.circle(dist/4)
             turtle.end_fill()
             turtle.up()
+            sleep(0.2)
         turtle.up()
+
+    def showChemin(self, labyrinthe: 'G.Graph'):
+        u"""
+        Permet de tracer le chemin pour aller du départ à l'arrivée
+
+        Précondition:
+            labyrinthe : G.Graph
+                l'instance du labyrinthe à dessiner
+
+        Postcondition:
+            Trace au feutre rouge le trajet du début (1,1) à la sortie (4,8) par exemple
+        """
+        node = (4, 8)
+        coord = self.coord[(1, 1)]
+
+        # Crée une pile pour inverser le trajet
+        pile = queue.LifoQueue()
+        pile.put(node)
+        turtle.goto(coord)
+        turtle.pencolor('red')
+        turtle.pensize(2)
+        turtle.pendown()
+        # Remplit la pile des enfant -> parent pour obtenir parent -> enfant
+        while node is not None:
+            node = labyrinthe.parent[node]
+            pile.put(node)
+
+        # On retire le parent initial (1, 1)
+        pile.get()
+
+        # On trace le chemin en dépilant
+        while not pile.empty():
+            node = pile.get()
+            print(node)
+            coordx, coordy = self.coord[node]
+            turtle.goto((coordx, coordy + (self.coord["dist"]/4)))
+            sleep(0.2)
+        turtle.penup()
 
 
 if __name__ == "__main__":
     test = GUI()
-    test.showLabyrinthe(L.Labyrinthe, 4, 8)
-    test.showGraph(L.Labyrinthe, 4, 8)
-    test.drawParcours(L.Labyrinthe, 4, 8)
+    labyrinthe = L.Labyrinthe
+    test.showLabyrinthe(labyrinthe, 4, 8)
+    test.showGraph(labyrinthe, 4, 8)
+    test.drawParcours(labyrinthe)
+    test.showChemin(labyrinthe)
     turtle.done()
