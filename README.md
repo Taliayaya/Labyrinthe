@@ -34,13 +34,13 @@ Vous pouvez télécharger le code sous format `.ZIP` ou bien en clonant le proje
 En https :
 
 ```sh
-git clone https://github.com/Taliayaya/visual_novel.git
+git clone https://github.com/Taliayaya/Labyrinthe.git
 ```
 
 En ssh :
 
 ```sh
-git clone git@github.com:Taliayaya/visual_novel
+git clone git@github.com:Taliayaya/Labyrinthe
 ```
 
 ### Prérequis
