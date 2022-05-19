@@ -254,6 +254,7 @@ class GUI:
         Postconditions:
             Affiche les noeuds du graphe
         """
+        self.coord["dist"] = dist
         turtle.fillcolor(FILLCOLOR)
         for l in range(1, nbLine+1):
             turtle.up()
@@ -323,7 +324,7 @@ class GUI:
         turtle.pencolor('red')
         turtle.pensize(2)
         turtle.pendown()
-        # Remplie la pile des enfant -> parent pour obtenir parent -> enfant
+        # Remplit la pile des enfant -> parent pour obtenir parent -> enfant
         while node is not None:
             node = labyrinthe.parent[node]
             pile.put(node)
@@ -335,8 +336,8 @@ class GUI:
         while not pile.empty():
             node = pile.get()
             print(node)
-            coord = self.coord[node]
-            turtle.goto(coord)
+            coordx, coordy = self.coord[node]
+            turtle.goto((coordx, coordy + (self.coord["dist"]/4)))
             sleep(0.2)
         turtle.penup()
 

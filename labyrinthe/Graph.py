@@ -112,7 +112,7 @@ class Graph:
             nodeA : tuple[int, int]
                 Le premier noeud à vérifier
             nodeA : tuple[int, int]
-                Le premier noeud à vérifier
+                Le second noeud à vérifier
 
         Postcondition:
             Renvoie un booléen signifiant si les noeuds sont liés ou non
