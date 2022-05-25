@@ -1,4 +1,4 @@
-# Labyrinthe
+# 🧱 Labyrinthe
 
 ## 📄 Description
 
